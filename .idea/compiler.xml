@@ -7,14 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="topping-service" />
+        <module name="data-inject" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="data-inject" target="17" />
       <module name="topping-service" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="data-inject" options="-parameters" />
       <module name="topping-service" options="-parameters" />
     </option>
   </component>
