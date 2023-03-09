@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5722fc90-d18e-40df-9800-9dae3326b422" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/topping-service/HELP.md" beforeDir="false" afterPath="$PROJECT_DIR$/topping-service/HELP.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topping-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/topping-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topping-service/src/main/kotlin/com/clearlife/toppingservice/ToppingServiceApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/topping-service/src/main/kotlin/com/clearlife/toppingservice/ToppingServiceApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topping-service/src/test/kotlin/com/clearlife/toppingservice/ToppingServiceApplicationTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/topping-service/src/test/kotlin/com/clearlife/toppingservice/ToppingServiceApplicationTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,23 +13,31 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/topping-service" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Mn2W12zxNhMcAgwJJJuL89uyjB" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "17",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -53,11 +58,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1678389053794</updated>
-      <workItem from="1678389054833" duration="184000" />
+      <workItem from="1678389054833" duration="1032000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
