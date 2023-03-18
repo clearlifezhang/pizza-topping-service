@@ -14,20 +14,20 @@ some basic analysis as to what toppings to order.
 
 ### Requirements:
 
-* 1. Create a pipeline that will do the following:
+*  Create a pipeline that will do the following:
    * a. retrieve data from an API endpoint which returns a Json object containing a list of
 tuples (string email, string[] toppings).
    * b. Create and persist the following metrics
        * i. Total Count per topping
        * ii. Unique user count per topping
        
-* 2. Create an endpoint which allows users to retrieve:
+*  Create an endpoint which allows users to retrieve:
    * a. Total count per topping
    * b. Unique count per topping
    * c. Most popular topping(s)
    * d. Least popular topping(s)
    
-* 3. Implementation of the pipeline can use any appropriate framework that could run in a
+*  Implementation of the pipeline can use any appropriate framework that could run in a
 kubernetes container.
 
-* 4. Endpoint implementation must happen using Kotlin & Spring Boot.
+*  Endpoint implementation must happen using Kotlin & Spring Boot.
