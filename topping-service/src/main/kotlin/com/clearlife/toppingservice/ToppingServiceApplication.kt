@@ -4,6 +4,8 @@ import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.http.MediaType
+import org.springframework.messaging.handler.annotation.MessageMapping
+import org.springframework.stereotype.Controller
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -23,6 +25,13 @@ class RestController (val toppinMetricService: ToppingMetricService){
     @GetMapping(value = ["/metrics"],
             produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun metrics() = toppinMetricService.generateMetrics()
+
+}
+
+@Controller
+class RSocketController(val toppingMetricService: ToppingMetricService) {
+    @MessageMapping("toppingmetrics")
+    fun metrics() = toppingMetricService.generateMetrics()
 
 }
 
@@ -48,11 +57,11 @@ class ToppingMetricService {
     private fun randomCount(bound:Int): Int {
         return ThreadLocalRandom.current().nextInt(bound)
     }
-
 }
 
+
 data class ToppingMetrics (val totalCountPerTopping: Int,
-                           val uniqueCountPerTopping: Int,
-                           val mostPopularToppings: List<String>,
-                           val leastPopularToppings: List<String>
+                       val uniqueCountPerTopping: Int,
+                       val mostPopularToppings: List<String>,
+                       val leastPopularToppings: List<String>
 )
