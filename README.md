@@ -15,17 +15,17 @@ some basic analysis as to what toppings to order.
 ### Requirements:
 
 *  Create a pipeline that will do the following:
-   * a. retrieve data from an API endpoint which returns a Json object containing a list of
+   * retrieve data from an API endpoint which returns a Json object containing a list of
 tuples (string email, string[] toppings).
-   * b. Create and persist the following metrics
-       * i. Total Count per topping
-       * ii. Unique user count per topping
+   * Create and persist the following metrics
+       * Total Count per topping
+       * Unique user count per topping
        
 *  Create an endpoint which allows users to retrieve:
-   * a. Total count per topping
-   * b. Unique count per topping
-   * c. Most popular topping(s)
-   * d. Least popular topping(s)
+   * Total count per topping
+   * Unique count per topping
+   * Most popular topping(s)
+   * Least popular topping(s)
    
 *  Implementation of the pipeline can use any appropriate framework that could run in a
 kubernetes container.
