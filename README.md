@@ -2,6 +2,8 @@
 
 service to generate metrics of pizza toppings (Kotlin REST and Rsocket service)
 
+This is part of **_the Data Processing Pipeline + Web Application Back-end Project_**, as described below.
+
 ## Background
 
 build a backend app that can help solve the following problem
@@ -23,7 +25,7 @@ tuples (string email, string[] toppings).
        
 *  Create an endpoint which allows users to retrieve:
    * Total count per topping
-   * Unique count per topping
+   * Unique user count per topping
    * Most popular topping(s)
    * Least popular topping(s)
    
@@ -31,3 +33,21 @@ tuples (string email, string[] toppings).
 kubernetes container.
 
 *  Endpoint implementation must happen using Kotlin & Spring Boot.
+
+### implementation (services)
+
+* [Data inject service](https://github.com/clearlifezhang/topping-injector)
+* [Data process and Redis service](https://github.com/clearlifezhang/topping-tracker-redis-service)
+* [Topping tracker service](https://github.com/clearlifezhang/pizza-topping-service)
+* [Topping tracker service client](https://github.com/clearlifezhang/topping-service-clients)
+
+### start the pipeline
+* start Redis server from command line interface (default port: 6379)
+  ```$ redis-server ```
+* start topping-tracker-redis-service at port 6060
+* start topping-injector at port 5050
+* start pizza-topping-service at port 8080 (REST service) and 7070(RSocket service)
+  * check REST service in browser
+   ```http://localhost:8080/metrics/Bacon```
+* Run end to end integration tests in toppingmetricsclient
+
