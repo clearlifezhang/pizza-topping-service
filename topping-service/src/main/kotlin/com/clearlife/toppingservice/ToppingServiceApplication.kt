@@ -1,17 +1,19 @@
 package com.clearlife.toppingservice
 
-import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import java.time.Duration
-import java.util.concurrent.ThreadLocalRandom
 
 @SpringBootApplication
 class ToppingServiceApplication
@@ -21,47 +23,45 @@ fun main(args: Array<String>) {
 }
 
 @RestController
-class RestController (val toppinMetricService: ToppingMetricService){
-    @GetMapping(value = ["/metrics"],
-            produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
-    fun metrics() = toppinMetricService.generateMetrics()
+class RestController(val toppingMetricService: ToppingMetricService) {
+    @GetMapping(value = ["/metrics/{toppingName}"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    fun metrics(@PathVariable toppingName: String) = toppingMetricService.generateMetrics(toppingName)
 
 }
 
 @Controller
 class RSocketController(val toppingMetricService: ToppingMetricService) {
     @MessageMapping("toppingmetrics")
-    fun metrics() = toppingMetricService.generateMetrics()
+    fun metrics(@PathVariable toppingName: String) = toppingMetricService.generateMetrics(toppingName)
 
 }
 
 @Service
 class ToppingMetricService {
-    fun generateMetrics(): Flux<ToppingMetrics> {
-        return Flux
-                .interval(
-                        Duration.ofSeconds(1))
-                .map{ToppingMetrics(randomCount(1000), randomCount(10), randomStrList(), randomStrList())}
+    private val webClient = WebClient.create("http://localhost:6060")
+    fun generateMetrics(toppingNme: String): Flux<ToppingMetrics> {
+        return Flux.interval(Duration.ofSeconds(10)).
+        flatMap { getToppingMetricsFromApi(toppingNme) }
     }
 
-    private fun randomStrList(): List<String> {
-        val ret = ArrayList<String>()
-        val ct = ThreadLocalRandom
-                .current().nextInt(2)
-        for (i in 0..ct){
-            ret.add(RandomStringUtils.randomAlphabetic(6).uppercase())
+    private fun getToppingMetricsFromApi(toppingName: String): Mono<ToppingMetrics> {
+        return Mono.zip(
+                webClient.get().uri("/redisapi/getTotalCount/{toppingName}", toppingName).retrieve().bodyToMono(Int::class.java),
+                webClient.get().uri("/redisapi/uniqueUserCount/{toppingName}", toppingName).retrieve().bodyToMono(Int::class.java),
+                webClient.get().uri("/redisapi/mostPopularToppings").retrieve().bodyToMono(object : ParameterizedTypeReference<List<String>>() {}),
+                webClient.get().uri("/redisapi/leastPopularToppings").retrieve().bodyToMono(object : ParameterizedTypeReference<List<String>>() {})).
+        map { tuple ->
+            ToppingMetrics(
+                    tuple.t1,
+                    tuple.t2,
+                    tuple.t3,
+                    tuple.t4)
         }
-        return ret
-    }
-
-    private fun randomCount(bound:Int): Int {
-        return ThreadLocalRandom.current().nextInt(bound)
     }
 }
 
-
-data class ToppingMetrics (val totalCountPerTopping: Int,
-                       val uniqueCountPerTopping: Int,
-                       val mostPopularToppings: List<String>,
-                       val leastPopularToppings: List<String>
-)
+data class ToppingMetrics(
+        val totalCountPerTopping: Int,
+        val uniqueUserCountPerTopping: Int,
+        val mostPopularToppings: List<String>,
+        val leastPopularToppings: List<String>)
