@@ -33,6 +33,7 @@ tuples (string email, string[] toppings).
 kubernetes container.
 
 *  Endpoint implementation must happen using Kotlin & Spring Boot.
+*  Implement API as **_Reactive Streams_** API.
 
 ### implementation (services)
 
