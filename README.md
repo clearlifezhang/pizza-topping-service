@@ -42,11 +42,11 @@ kubernetes container.
 * [Topping tracker service client](https://github.com/clearlifezhang/topping-service-clients)
 
 ### start the pipeline
-* start Redis server from command line interface (default port: 6379)
+* start Redis server from command line interface (default port: **_6379_**)
   ```$ redis-server ```
-* start topping-tracker-redis-service at port 6060
-* start topping-injector at port 5050
-* start pizza-topping-service at port 8080 (REST service) and 7070(RSocket service)
+* start topping-tracker-redis-service at port **_6060_**
+* start topping-injector at port **_5050_**
+* start pizza-topping-service at port **_8080_** (REST service) and **_7070_**(RSocket service)
   * check REST service in browser
    ```http://localhost:8080/metrics/Bacon```
 * Run end to end integration tests in toppingmetricsclient
