@@ -38,7 +38,7 @@ class RSocketController(val toppingMetricService: ToppingMetricService) {
 
 @Service
 class ToppingMetricService {
-    private val webClient = WebClient.create("http://localhost:6060")
+    private val webClient = WebClient.create("http://data-process-redis:6060")
     fun generateMetrics(toppingNme: String): Flux<ToppingMetrics> {
         return Flux.interval(Duration.ofSeconds(10)).
         flatMap { getToppingMetricsFromApi(toppingNme) }
