@@ -42,13 +42,37 @@ kubernetes container.
 * [Topping tracker service](https://github.com/clearlifezhang/pizza-topping-service)
 * [Topping tracker service client](https://github.com/clearlifezhang/topping-service-clients)
 
-### start the pipeline
-* start Redis server from command line interface (default port: **_6379_**)
-  ```$ redis-server ```
-* start topping-tracker-redis-service at port **_6060_**
-* start topping-injector at port **_5050_**
-* start pizza-topping-service at port **_8080_** (REST service) and **_7070_**(RSocket service)
-  * check REST service in browser
-   ```http://localhost:8080/metrics/Bacon```
-* Run end to end integration tests in toppingmetricsclient
+### containerize services and deploy to a Kubernetes cluster (local one node cluster)
+* pull redis-server image from Docker Hub
+  * ```docker login ```
+  * ```docker pull redis:latest```
+* build data-process-redis-service image (under the directory where pom.xml is located)
+  * ```docker build -t data-process-redis . ```
+* build data-injector
+  * ```docker build -t data-injector . ```
+* build topping-service image
+  * ```docker build -t topping-service .```
+* deploy redis-server container
+  * ```kubectl apply -f redis_redis_server_deployment.yaml```
+* deploy data-process-redis
+  * ```kubectl apply -f data_process_redis_deployment.yaml```
+* deploy data-injector 
+  * ```kubectl apply -f data_injector_deployment.yaml```
+* deploy data-process-redis
+  * ```kubectl apply -f data_process_redis_deployment.yaml```
+* check if all services are deployed properly
+  * ```kubectl get pods```
+* check if the api service backend is working properly
+  * check from browser
+    * ```http://localhost:30080/metrics/onions```
+  * check from client
+    * run the two integration tests in toppingserviceclient
+    
+### deploy to GCP and secure this API service backend application with HTTPS
+* revert redis-service service type from NodePort back to ClusterIP
+* configure GKE (Google Kubernetes Engine) ingress controller
+* Update the DNS settings for the domain to point to the static IP address created
+* URL for the API endpoint
+  * ```https://clearlife.com/metrics/onions```
+
 
