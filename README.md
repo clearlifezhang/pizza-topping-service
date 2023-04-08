@@ -68,7 +68,7 @@ kubernetes container.
   * check from client
     * run the two integration tests in toppingserviceclient
     
-### deploy to GCP and secure this API service backend application with HTTPS
+### deploy to GCP and secure this API service backend application with HTTPS(simplified)
 * revert redis-service service type from NodePort back to ClusterIP
 * configure GKE (Google Kubernetes Engine) ingress controller
 * Update the DNS settings for the domain to point to the static IP address created
