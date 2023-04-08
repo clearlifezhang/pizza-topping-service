@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: topping-service
+spec:
+  selector:
+    matchLabels:
+      app: topping-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: topping-service
+    spec:
+      containers:
+      - name: topping-service
+        image: clearlifezhang/topping-service:latest
+        env:
+        - name: DATA_PROCESSOR_HOST
+          value: data-process-redis
+        - name: DATA_PROCESSOR_PORT
+          value: "6060"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: topping-service
+spec:
+  selector:
+    app: topping-service
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: rest
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080
+    - protocol: TCP
+      name: rsocket
+      port: 7070
+      targetPort: 7070
+      nodePort: 30070
+

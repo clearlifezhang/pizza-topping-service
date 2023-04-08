@@ -38,10 +38,13 @@ class RSocketController(val toppingMetricService: ToppingMetricService) {
 
 @Service
 class ToppingMetricService {
-    private val webClient = WebClient.create("http://data-process-redis:6060")
+    val dataProcessorHost = System.getenv("DATA_PROCESSOR_HOST")?.takeIf { it.isNotEmpty() } ?: "data-process-redis"
+    val dataProcessorPortStr = System.getenv("DATA_PROCESSOR_PORT")
+    val dataProcessorPort = dataProcessorPortStr?.takeIf { it.isNotEmpty() }?.toInt() ?: 6060
+
+    private val webClient = WebClient.create("http://$dataProcessorHost:$dataProcessorPort")
     fun generateMetrics(toppingNme: String): Flux<ToppingMetrics> {
-        return Flux.interval(Duration.ofSeconds(10)).
-        flatMap { getToppingMetricsFromApi(toppingNme) }
+        return Flux.interval(Duration.ofSeconds(10)).flatMap { getToppingMetricsFromApi(toppingNme) }
     }
 
     private fun getToppingMetricsFromApi(toppingName: String): Mono<ToppingMetrics> {
@@ -49,8 +52,7 @@ class ToppingMetricService {
                 webClient.get().uri("/redisapi/getTotalCount/{toppingName}", toppingName).retrieve().bodyToMono(Int::class.java),
                 webClient.get().uri("/redisapi/uniqueUserCount/{toppingName}", toppingName).retrieve().bodyToMono(Int::class.java),
                 webClient.get().uri("/redisapi/mostPopularToppings").retrieve().bodyToMono(object : ParameterizedTypeReference<List<String>>() {}),
-                webClient.get().uri("/redisapi/leastPopularToppings").retrieve().bodyToMono(object : ParameterizedTypeReference<List<String>>() {})).
-        map { tuple ->
+                webClient.get().uri("/redisapi/leastPopularToppings").retrieve().bodyToMono(object : ParameterizedTypeReference<List<String>>() {})).map { tuple ->
             ToppingMetrics(
                     tuple.t1,
                     tuple.t2,
