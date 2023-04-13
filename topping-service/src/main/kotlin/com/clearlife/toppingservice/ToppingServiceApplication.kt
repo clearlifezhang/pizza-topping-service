@@ -7,6 +7,7 @@ import org.springframework.http.MediaType
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -23,6 +24,7 @@ fun main(args: Array<String>) {
 }
 
 @RestController
+@CrossOrigin(origins = ["*"])
 class RestController(val toppingMetricService: ToppingMetricService) {
     @GetMapping(value = ["/metrics/{toppingName}"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun metrics(@PathVariable toppingName: String) = toppingMetricService.generateMetrics(toppingName)
