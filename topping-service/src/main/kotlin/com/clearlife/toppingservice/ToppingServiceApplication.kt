@@ -24,7 +24,6 @@ fun main(args: Array<String>) {
 }
 
 @RestController
-@CrossOrigin(origins = ["*"])
 class RestController(val toppingMetricService: ToppingMetricService) {
     @GetMapping(value = ["/metrics/{toppingName}"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun metrics(@PathVariable toppingName: String) = toppingMetricService.generateMetrics(toppingName)
