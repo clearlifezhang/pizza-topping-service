@@ -25,9 +25,18 @@ fun main(args: Array<String>) {
 
 @RestController
 class RestController(val toppingMetricService: ToppingMetricService) {
+    @GetMapping("/home")
+    fun home():String{
+        return "This is home page; public to all"
+    }
+
+    @GetMapping("/admin")
+    fun admin():String{
+        return "This is admin page."
+    }
+
     @GetMapping(value = ["/metrics/{toppingName}"], produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun metrics(@PathVariable toppingName: String) = toppingMetricService.generateMetrics(toppingName)
-
 }
 
 @Controller
